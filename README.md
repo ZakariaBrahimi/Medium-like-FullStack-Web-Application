@@ -1,1 +1,1 @@
-# Medium-like-FullStack-Web-Application
+# Medium-like FullStack Web Application
