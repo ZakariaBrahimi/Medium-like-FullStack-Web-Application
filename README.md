@@ -6,7 +6,7 @@
     - Using the email
     - Using Google and Facebook account
 - **Edit** **User Profile**
-- **Notification System for Comments**
+- **Notification System for New Comments**
 - **Create - Edit - Delete  Article**
 - **Pre-defined Categories for Articles**
 - **Save an article as a Draft before publishing**
@@ -17,7 +17,7 @@
 - **Share Articles**
     - Copy Link
     - Share to Facebook + Twitter + LinkedIn
-- **Search for an article**
+- **Search for an article or User Profile**
 
 ## The Technology required for building the app:
 
