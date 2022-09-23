@@ -1,7 +1,17 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import CommentsSection from './CommentsSection'
 
-const Article = () => {
+const Article = ({content, setContent}) => {
+  const [dropDownStatus, setDropDownStatus] = useState('invisible')
+  const dropDownHandler = ()=>{
+    if(dropDownStatus === 'invisible'){
+      setDropDownStatus('visible')
+    }else{
+      setDropDownStatus('invisible')
+    }
+  }
+  
   return (
     <>
     <div className='flex flex-col items-center my-16'>
@@ -13,7 +23,7 @@ const Article = () => {
           </svg>
           <span>Zakaria</span>
       </Link>
-      <p class="text-gray-600">Last updated 3 mins ago</p>
+      <p className="text-gray-600">Last updated 3 mins ago</p>
       <div className='flex gap-4'>
       <button>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className='text-black hover:text-gray-700 focus:text-gray-700 h-6 w-6' ><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
@@ -37,12 +47,45 @@ const Article = () => {
                <span className=''>share</span>
             </a>
       </div>
-      <button>
+      <div onClick={dropDownHandler} type='button'  className='cursor-pointer'>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M4.39 12c0 .55.2 1.02.59 1.41.39.4.86.59 1.4.59.56 0 1.03-.2 1.42-.59.4-.39.59-.86.59-1.41 0-.55-.2-1.02-.6-1.41A1.93 1.93 0 0 0 6.4 10c-.55 0-1.02.2-1.41.59-.4.39-.6.86-.6 1.41zM10 12c0 .55.2 1.02.58 1.41.4.4.87.59 1.42.59.54 0 1.02-.2 1.4-.59.4-.39.6-.86.6-1.41 0-.55-.2-1.02-.6-1.41a1.93 1.93 0 0 0-1.4-.59c-.55 0-1.04.2-1.42.59-.4.39-.58.86-.58 1.41zm5.6 0c0 .55.2 1.02.57 1.41.4.4.88.59 1.43.59.57 0 1.04-.2 1.43-.59.39-.39.57-.86.57-1.41 0-.55-.2-1.02-.57-1.41A1.93 1.93 0 0 0 17.6 10c-.55 0-1.04.2-1.43.59-.38.39-.57.86-.57 1.41z" fill="#000"></path></svg>
-      </button>
+      <div className={`p-4 ${dropDownStatus} absolute w-40 z-10 text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm  transition-opacity duration-300 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800`}>
+        <ul className='text-center'>
+          <li className='text-red-400 flex items-center gap-2 border-b px-4 py-2 hover:text-black '>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+
+
+
+            Delete 
+            </li>
+          <li className='flex items-center gap-2 border-b px-4 py-2 hover:text-black'>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+</svg>
+
+            Edit </li>
+          <li className='flex items-center gap-1 px-4 py-2 hover:text-black'>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+</svg>
+
+            
+            Copy link </li>
+        </ul>
+    </div>
+      </div>
+      
+
+      
 
       
       </header>
+
+
+
+
 
 
       <h1 className='text-3xl text-center font-medium	my-3 mt-6'>Amazon Interview Experience (II) -Selected</h1>
@@ -111,6 +154,8 @@ const Article = () => {
       </div>
     </main>
     </div>
+    <CommentsSection/>
+    <h1>geerfefjnl</h1>
     </>
   )
 }

@@ -7,8 +7,10 @@ import UserArticles from '../Pages/UserArticles'
 import UserProfile from '../Pages/UserProfile'
 import CreateNewArticle from '../Pages/CreateNewArticle'
 import Article from '../Pages/Article'
+import { useState } from 'react'
 
 const NavBar = () => {
+  const [content, setContent] = useState()
   return (
     <>
     <div className='sticky top-0 bg-gray-100 shadow-lg'>
@@ -76,9 +78,9 @@ const NavBar = () => {
       <Route path='/favorite-lists' element={<FavoriteLists/>} />
       <Route path='/my-articles' element={<UserArticles/>} />
       <Route path='/my-profile' element={<UserProfile/>} />
-      <Route path='/create-new-article' element={<CreateNewArticle/>} />
+      <Route path='/create-new-article' element={<CreateNewArticle content={content} setContent={setContent}/>} />
 
-      <Route path='/article' element={<Article/>}/> {/*TODO: add article id to the url */}
+      <Route path='/article' element={<Article content={content} setContent={setContent}/>}/> {/*TODO: add article id to the url */}
     </Routes>
     </>
   )
