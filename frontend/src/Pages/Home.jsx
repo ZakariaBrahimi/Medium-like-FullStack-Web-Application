@@ -5,7 +5,8 @@ import Login from './Login'
 const Home = () => {
   return (
     <>
-      <div className='flex flex-col items-center my-16'>
+      <p className='w-8/12 m-auto border-b text-2xl font-bold text-gray-800 mb-4 mt-16'>Recent Articles</p>
+      <div className='flex flex-col items-center mx-16'>
     <div class="p-6 flex flex-col justify-start border-b ">
       <Link to='article'>
       <h5 class="text-gray-900 text-xl font-medium mb-2">Card title</h5>
@@ -176,7 +177,6 @@ const Home = () => {
 
     </div>
 
-    <Login/>
     
       
 
