@@ -1,13 +1,24 @@
 import {Link} from 'react-router-dom'
-
-import { useState } from 'react'
-
+import { axiosAuth } from '../axios'
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
-  const [content, setContent] = useState()
+  let navigate = useNavigate();
+
+    const logout = ()=>{
+      axiosAuth({
+            url: '/logout/',
+            method: 'post',
+        }).then(()=>{
+            window.localStorage.removeItem('token')
+            navigate('/login')
+        })
+    }  
   return (
     <>
-    <div className='sticky top-0 bg-gray-100 shadow-lg '>
+    {
+      window.localStorage.getItem('token') ?
+      <div className='sticky top-0 bg-gray-100 shadow-lg '>
     <nav className='  container m-auto flex flex-wrap items-center justify-between py-4 text-gray-500 navbar navbar-expand-lg navbar-light'>
         <Link to="/" className="logo flex gap-2 items-center">
             <img className='w-8' src="medium-logo.png" alt="medium-logo.png" />
@@ -52,20 +63,54 @@ const NavBar = () => {
             </Link>
 
         </div>
+        
         <div className='flex items-center'>
-        <Link to='/my-profile' className="leftNav"> 
+        <Link to='/my-profile' className="leftNav" > 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7 hover:text-gray-700 focus:text-gray-700">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
+          
         </Link>
-        <a href='' class="inline-block px-6 py-2.5 mr-2 ml-4 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Logout</a>
+        <button onClick={logout} class="inline-block px-6 py-2.5 mr-2 ml-4 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Logout</button>
         </div>
     </nav>
     </div>
-    
+    :
+    <div className='sticky top-0 bg-gray-100 shadow-lg '>
+    <nav className='  container m-auto flex flex-wrap items-center justify-between py-4 text-gray-500 navbar navbar-expand-lg navbar-light'>
+        <Link to="/" className="logo flex gap-2 items-center">
+            <img className='w-8' src="medium-logo.png" alt="medium-logo.png" />
+            <span className=''>Medium</span>
+        </Link>
+        <div className="nav flex justify-between -700 w-6/12">
 
+            <Link to="/search">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 hover:text-gray-700 focus:text-gray-700">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+            </Link>
 
-    
+            <Link to="/">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7 hover:text-gray-700 focus:text-gray-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+            </Link>
+
+        </div>
+        
+        <div className='flex items-center'>
+        <Link to='/signup' className="leftNav"> 
+          
+        <span  class="inline-block px-6 py-2.5 mr-2 ml-4 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Join us</span>
+        </Link>
+        <Link to='/login' className="leftNav"> 
+          
+        <span  class="inline-block px-6 py-2.5 mr-2 ml-4 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light">Login</span>
+        </Link>
+        </div>
+    </nav>
+    </div>
+    }
     </>
   )
 }

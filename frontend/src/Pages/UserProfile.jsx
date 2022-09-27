@@ -1,6 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 
 const UserProfile = () => {
+
   return (
     <div className='bg-blueGray-200 w-full'>
 <div className='flex justify-center pt-16'>
@@ -20,6 +23,9 @@ const UserProfile = () => {
                 <button class="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
                   Follow
                 </button>
+                <Link to='/password-change' class=" bg-gray-600 text-white uppercase   font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                  Change Password
+                </Link>
               </div>
             </div>
             <div class="w-full lg:w-4/12 px-4 lg:order-1">

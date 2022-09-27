@@ -3,7 +3,8 @@ import React from 'react'
 const Search = () => {
   return (
     <>
-<div style={{"max-width":"700px" ,"margin": "100px auto"}}>
+    <p className='w-7/12 m-auto border-b text-2xl font-bold text-gray-800 mt-16'>Searching for Users, Articles</p>
+<div style={{"max-width":"700px" ,"margin": "50px auto"}}>
 
 <form class="flex items-center">   
     <label for="voice-search" class="sr-only">Search</label>

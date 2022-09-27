@@ -10,6 +10,8 @@ import CreateNewArticle from './Pages/CreateNewArticle'
 import Article from './Pages/Article'
 import Signup from './Pages/Signup'
 import Login from './Pages/Login'
+import PasswordReset from './Pages/PasswordReset'
+import PasswordChange from './Pages/PasswordChange'
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
     
     
     <Routes>
+      <Route path='/password-reset'       element={<PasswordReset/>} />
+      <Route path='/password-change'       element={<PasswordChange/>} />
       <Route path='/'                     element={<Home/>} />
       <Route path='/search'               element={<Search/>} />
       <Route path='/login'                element={<Login />}/>       

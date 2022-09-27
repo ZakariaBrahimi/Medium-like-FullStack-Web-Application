@@ -21,7 +21,9 @@ const CreateNewArticle = ({content, setContent}) => {
     }
   };
   return (
-<div className='w-3/4 m-auto my-16 absolute left-40'>
+    <>
+    <p className='w-9/12 m-auto border-b text-2xl font-bold text-gray-800 mt-16'>Create a New Article</p>
+    <div className='w-3/4 m-auto mb-16 mt-8 absolute left-40'>
 <Editor
         tinymceScriptSrc={process.env.PUBLIC_URL + '/tinymce/tinymce.min.js'}
         onInit={(evt, editor) => editorRef.current = editor}
@@ -54,6 +56,8 @@ const CreateNewArticle = ({content, setContent}) => {
 
 
 </div>
+    </>
+
 
 
   )
