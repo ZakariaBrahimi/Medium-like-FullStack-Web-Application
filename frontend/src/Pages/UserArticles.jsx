@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 const UserArticles = () => {
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
 
     <>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Login from './Login'
 
 const Home = () => {
+  
   return (
     <>
       <p className='w-8/12 m-auto border-b text-2xl font-bold text-gray-800 mb-4 mt-16'>Recent Articles</p>

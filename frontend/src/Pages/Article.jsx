@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import AddComment from '../Components/AddComment'
 import CommentsSection from '../Components/CommentsSection'
 import {useState, useEffect} from 'react'
@@ -12,6 +12,9 @@ const Article = ({content, setContent}) => {
       setDropDownStatus('invisible')
     }
   }
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
     <>
     <div className='flex flex-col items-center my-16'>
@@ -25,9 +28,29 @@ const Article = ({content, setContent}) => {
       </Link>
       <p className="text-gray-600">Last updated 3 mins ago</p>
       <div className='flex gap-4'>
-      <button>
+
+
+      <div onClick={dropDownHandler} type='button'  className='cursor-pointer'>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className='text-black hover:text-gray-700 focus:text-gray-700 h-6 w-6' ><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
-      </button>
+      <div className={`p-4 ${dropDownStatus} absolute w-40 z-10 text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm  transition-opacity duration-300 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800`}>
+        <ul className='text-center'>
+          
+          <Link to='/'>
+          <li className='flex items-center gap-2 px-4 py-2 hover:text-black'>
+
+          <svg xmlns="http://www.w3.org/2000/svg" fill="fill" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+</svg>
+
+            Reading List </li>
+          
+          </Link>
+
+        </ul>
+    </div>
+      </div>
+
+
       <div class="flex cursor-pointer items-center transition hover:text-slate-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-1.5 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
@@ -60,12 +83,15 @@ const Article = ({content, setContent}) => {
 
             Delete 
             </li>
+          <Link to='/edit-article'>
           <li className='flex items-center gap-2 border-b px-4 py-2 hover:text-black'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
   <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
 </svg>
 
             Edit </li>
+          
+          </Link>
           <li className='flex items-center gap-1 px-4 py-2 hover:text-black'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />

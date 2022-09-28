@@ -1,7 +1,7 @@
 import {React, useRef, useState} from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import ReactHtmlParser from 'react-html-parser';
- 
+ import  {Navigate} from 'react-router-dom'
 
 
 const CreateNewArticle = ({content, setContent}) => {
@@ -20,6 +20,9 @@ const CreateNewArticle = ({content, setContent}) => {
 
     }
   };
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
     <>
     <p className='w-9/12 m-auto border-b text-2xl font-bold text-gray-800 mt-16'>Create a New Article</p>

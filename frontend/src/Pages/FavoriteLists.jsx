@@ -1,7 +1,10 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Navigate} from 'react-router-dom'
 
 const FavoriteLists = () => {
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
     <>
       <div className='w-6/12 my-16 m-auto  shadow-sm'>

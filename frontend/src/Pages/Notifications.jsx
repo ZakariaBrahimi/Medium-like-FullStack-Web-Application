@@ -1,6 +1,10 @@
 import React from 'react'
+import {Navigate} from 'react-router-dom'
 
 const Notifications = () => {
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
     <>
     <div className='w-6/12 my-16 m-auto  shadow-sm'>

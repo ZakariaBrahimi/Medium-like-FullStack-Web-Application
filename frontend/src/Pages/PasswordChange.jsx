@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { axiosAuth } from '../axios'
 
 const PasswordChange = () => {
@@ -38,6 +38,9 @@ const PasswordChange = () => {
             console.log(err)
         })
   }
+  if (!window.localStorage.getItem('token')){
+    return <Navigate to='/' replace />
+}
   return (
     <>
         <main class="flex-1 lg:mt-20">

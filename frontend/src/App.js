@@ -12,6 +12,8 @@ import Signup from './Pages/Signup'
 import Login from './Pages/Login'
 import PasswordReset from './Pages/PasswordReset'
 import PasswordChange from './Pages/PasswordChange'
+import PageNotFound from './Pages/PageNotFound'
+import EditArticle from './Pages/EditArticle'
 
 function App() {
   return (
@@ -21,7 +23,8 @@ function App() {
     
     <Routes>
       <Route path='/password-reset'       element={<PasswordReset/>} />
-      <Route path='/password-change'       element={<PasswordChange/>} />
+      <Route path='/password-change'      element={<PasswordChange/>} />
+      <Route path='/edit-article'         element={<EditArticle/>} />
       <Route path='/'                     element={<Home/>} />
       <Route path='/search'               element={<Search/>} />
       <Route path='/login'                element={<Login />}/>       
@@ -31,6 +34,7 @@ function App() {
       <Route path='/my-articles'          element={<UserArticles/>} />
       <Route path='/my-profile'           element={<UserProfile/>} />
       <Route path='/create-new-article'   element={<CreateNewArticle />} />
+      <Route path='*'   element={<PageNotFound />} />
 
       <Route path='/article'              element={<Article/>}/> {/*TODO: add article id to the url */}
     </Routes>
