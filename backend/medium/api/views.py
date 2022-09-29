@@ -1,8 +1,18 @@
 from django.shortcuts import render
+from ..models import *
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
+from .serializers import *
+
 
 # unAuthorized Users
-def homaPageArticles(request):
-    pass
+@api_view(['GET'])
+def homePageArticles(request):
+    home_page_articles = Post.objects.all()
+    serializer = PostSerializer(home_page_articles, many=True)
+    return Response(serializer.data)
 
 
 

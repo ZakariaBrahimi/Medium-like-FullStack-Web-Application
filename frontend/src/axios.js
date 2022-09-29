@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const axiosMedium = axios.create({
+export const axiosAPI = axios.create({
     baseURL: `${process.env.REACT_APP_API_URL}/api`,
     //timeout: 1000,
   });

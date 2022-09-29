@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'userAccount',
     'medium',
     
     'corsheaders',
@@ -110,5 +111,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 OLD_PASSWORD_FIELD_ENABLED = True
+AUTH_USER_MODEL = 'userAccount.CustomUser'
 
 
