@@ -54,14 +54,8 @@ const FavoriteLists = () => {
       </div>
       </div>
     </div>
-
-
-    
-
     
     </div>
-
-    
     <div className='mb-6'>
         <p className='border-b text-2xl font-bold text-gray-800 mb-4 mt-12'>Published Articles</p>
         <div class="py-1 flex flex-col justify-start border-b ">

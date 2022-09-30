@@ -1,19 +1,16 @@
 import {React, useRef, useState} from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import ReactHtmlParser from 'react-html-parser';
- import  {Navigate} from 'react-router-dom'
+ import  {Navigate, useLocation} from 'react-router-dom'
 
-const EditArticle = ({content, setContent}) => {
+const EditArticle = () => {
     const editorRef = useRef(null);
+    const location = useLocation()
+    let article_data = location.state['data']
+    //editorRef.current.setContent("article_data['HTMLBody']")
     const log = () => {
     if (editorRef.current) {
-      //console.log(editorRef.current.getContent());
       console.log('editorRef.current')
-      //console.log(editorRef.current.parser.schema)
-      //setContent(editorRef.current.contentDocument.all[6].innerHTML)
-      //console.log(editorRef.current.contentDocument.all[6].innerHTML)
-      //document.getElementById('content').innerHTML = content
-      //console.log(typeof(content))
 
     }
   };
@@ -27,8 +24,8 @@ const EditArticle = ({content, setContent}) => {
         {/*TODO: image field */}
 <Editor
         tinymceScriptSrc={process.env.PUBLIC_URL + '/tinymce/tinymce.min.js'}
-        onInit={(evt, editor) => editorRef.current = editor}
-        onEditorChange={(nextContent)=>{setContent(nextContent)}}
+        onInit={() => editorRef.current = article_data['HTMLBody']}
+        //onEditorChange={(nextContent)=>{setContent(nextContent)}}
         init={{
           height: 500,
           menubar: true,
@@ -49,8 +46,10 @@ const EditArticle = ({content, setContent}) => {
        Publish post
    </button>
 
-    {/*<div dangerouslySetInnerHTML={{ __html: '<h1>hhh</h1><ul><li>hhh</li></ul>' }} />*/}
+    {/*<div dangerouslySetInnerHTML={{ __html: '<h1>hhh</h1><ul><li>hhh</li></ul>' }} />
     <div>{ ReactHtmlParser(content) }</div>
+    */}
+    
 
 
 

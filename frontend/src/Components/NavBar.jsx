@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
   let navigate = useNavigate();
-
+  
     const logout = ()=>{
       axiosAuth({
             url: '/logout/',

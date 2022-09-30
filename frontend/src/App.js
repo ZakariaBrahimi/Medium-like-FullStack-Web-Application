@@ -14,8 +14,26 @@ import PasswordReset from './Pages/PasswordReset'
 import PasswordChange from './Pages/PasswordChange'
 import PageNotFound from './Pages/PageNotFound'
 import EditArticle from './Pages/EditArticle'
+import React, {useEffect, useState} from 'react'
+import {axiosAPI} from './axios'
 
 function App() {
+  const [userInfo, setUserInfo] = useState([])
+  useEffect(()=>{
+    axiosAPI({
+      url:"user-profile",
+      method: 'get',
+      headers:{
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${window.localStorage.getItem('token')}`
+    }
+    }).then((response)=>{
+      const user_info = response.data
+      setUserInfo(user_info)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }, [])
   return (
     <>
     <NavBar />
@@ -24,7 +42,7 @@ function App() {
     <Routes>
       <Route path='/password-reset'       element={<PasswordReset/>} />
       <Route path='/password-change'      element={<PasswordChange/>} />
-      <Route path='/edit-article'         element={<EditArticle/>} />
+      <Route path='/:id/:slug/edit'       element={<EditArticle/>} />
       <Route path='/'                     element={<Home/>} />
       <Route path='/search'               element={<Search/>} />
       <Route path='/login'                element={<Login />}/>       
@@ -32,11 +50,10 @@ function App() {
       <Route path='/notifications'        element={<Notifications/>}/>
       <Route path='/favorite-lists'       element={<FavoriteLists/>} />
       <Route path='/my-articles'          element={<UserArticles/>} />
-      <Route path='/my-profile'           element={<UserProfile/>} />
+      <Route path={`/my-profile`}          element={<UserProfile userInfo={userInfo}/>} />
       <Route path='/create-new-article'   element={<CreateNewArticle />} />
+      <Route path='/article/:id/:slug'    element={<Article/>}/> 
       <Route path='*'   element={<PageNotFound />} />
-
-      <Route path='/article'              element={<Article/>}/> {/*TODO: add article id to the url */}
     </Routes>
     </>
   );

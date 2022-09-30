@@ -1,8 +1,6 @@
-import React from 'react'
 import { Link, Navigate } from 'react-router-dom'
 
-
-const UserProfile = () => {
+const UserProfile = ({userInfo}) => {
   if (!window.localStorage.getItem('token')){
     return <Navigate to='/' replace />
 }
