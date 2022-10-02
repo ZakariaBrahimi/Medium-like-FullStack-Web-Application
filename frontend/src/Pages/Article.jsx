@@ -3,11 +3,14 @@ import AddComment from '../Components/AddComment'
 import CommentsSection from '../Components/CommentsSection'
 import {useEffect, useState} from 'react'
 import { axiosAPI } from '../axios'
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
+
 
 const Article = () => {
   const navigate = useNavigate()
   const [article, setArticle] = useState([])
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState([])
   const params = useParams();
   useEffect(()=>{
     axiosAPI({
@@ -17,10 +20,11 @@ const Article = () => {
         "Authorization": `Token ${window.localStorage.getItem('token')}`
     }
     }).then((response)=>{
-      let article_details = response.data
-      setArticle(article_details)
+      setComments(response.data['comments'])
+      setArticle(response.data['articleDetails'])
+      //console.log(response.data['comments'])
     }).catch((error)=>{
-      console.log(error)
+      console.log('error')
     })
   }, [])
   const deleteArticle = ()=>{
@@ -37,9 +41,43 @@ const Article = () => {
       console.log(error)
     })
   }
-  const addToFavoriteList = ()=>{
+  const addComment = (e)=>{
+    e.preventDefault()
     axiosAPI({
-      url:`add-to-favorite/${params.id}`,
+      url:`add-comment/${params.id}`,
+      method: 'post',
+      headers:{
+        "Authorization": `Token ${window.localStorage.getItem('token')}`
+    },
+    data:{'newComment':newComment}
+    }).then((response)=>{
+      console.log('Comment added Successfully')
+      setComments((prevComments)=>([...prevComments, newComment]))
+      //e.target[0].childNodes[0].data = ''
+      console.log(e.target[0].childNodes[0].data)
+      setNewComment('')
+    }).catch((error)=>{
+      console.log(error)
+    })
+    e.target.value = '' 
+  }
+  const addToAndRemoveFromFavoriteList = ()=>{
+    axiosAPI({
+      url:`add-to-remove-from-favorite/${params.id}`,
+      method: 'post',
+      headers:{
+        "Authorization": `Token ${window.localStorage.getItem('token')}`
+    },
+
+    }).then((response)=>{
+      console.log('success')
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+  const likeDislikeArticle = ()=>{
+    axiosAPI({
+      url:`like-dislike-article/${params.id}`,
       method: 'post',
       headers:{
         "Authorization": `Token ${window.localStorage.getItem('token')}`
@@ -59,6 +97,10 @@ const Article = () => {
       setDropDownStatus('invisible')
     }
   }
+  const copyLink = ()=>{
+    //navigator.clipboard.writeText('window.location.href')
+    console.log('hhhhh')
+  }
   if (!window.localStorage.getItem('token')){
     return <Navigate to='/' replace />
 }
@@ -77,12 +119,9 @@ const Article = () => {
       <div className='flex gap-4'>
 
 
-      <div onClick={dropDownHandler} type='button'  className='cursor-pointer'>
+      <div onClick={addToAndRemoveFromFavoriteList} className='cursor-pointer'>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className='text-black hover:text-gray-700 focus:text-gray-700 h-6 w-6' ><path d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5v-2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4V5.75z" fill="#000"></path></svg>
-      <div className={`p-4 ${dropDownStatus} absolute w-40 z-10 text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm  transition-opacity duration-300 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800`}>
-        <ul className='text-center'>
-        </ul>
-    </div>
+      
       </div>
       <div class="flex cursor-pointer items-center transition hover:text-slate-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-1.5 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -90,8 +129,8 @@ const Article = () => {
             </svg>
             <span>125</span>
           </div>
-          <div class="flex cursor-pointer items-center transition hover:text-slate-600">
-          <svg fill="none" viewBox="0 0 24 24"  class="h-6 w-6 mr-1" stroke="currentColor">
+          <div  class="flex cursor-pointer items-center transition hover:text-slate-600">
+          <svg onClick={likeDislikeArticle} fill="none" viewBox="0 0 24 24"  class="h-6 w-6 mr-1" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                 </svg>
             <span>4</span>
@@ -125,7 +164,7 @@ const Article = () => {
             Edit </li>
           
           </Link>
-          <li className='flex items-center gap-1 px-4 py-2 hover:text-black'>
+          <li onClick={copyLink} className='flex items-center gap-1 px-4 py-2 hover:text-black'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
 </svg>
@@ -213,14 +252,9 @@ const Article = () => {
       </div>
     </main>
     </div>
-
-
-    <CommentsSection/>
-    
-    <AddComment/>
-    
+    <CommentsSection comments={comments}/>   
+    <AddComment addComment={addComment} newComment={newComment} setNewComment={setNewComment}/>
     </>
   )
 }
-
 export default Article

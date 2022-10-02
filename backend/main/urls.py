@@ -51,8 +51,6 @@ class AccountConfirmEmailTemplateView(TemplateView):
     def get(self,request, *args, **kwargs):
         print(kwargs['key'])
         r = requests.post('http://127.0.0.1:8000/auth/registration/verify-email/', data={'key': kwargs['key']})
-        print('55555')
-        print(r.text)
         return render(request, self.template_name, {})
     
 urlpatterns = [

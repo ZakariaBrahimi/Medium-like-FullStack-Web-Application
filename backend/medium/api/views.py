@@ -34,9 +34,11 @@ def userProfile(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def articleDetails(request, article_slug, article_id):
-    article = get_object_or_404(Article, userID=request.user.id, slug=article_slug, id=article_id)
-    serializer = ArticleSerializer(article)
-    return Response(serializer.data)
+    comments = Comment.objects.filter(articleID=article_id)
+    comments_serializer = CommentSerializer(comments, many=True)
+    article = get_object_or_404(Article, slug=article_slug, id=article_id)
+    article_serializer = ArticleSerializer(article)
+    return Response({'articleDetails':article_serializer.data, 'comments':comments_serializer.data})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -56,20 +58,33 @@ def deleteArticle(request, article_id):
     article.delete()
     return Response('deleted successfully')
 
-def likeDislikeArticle(request):
-    pass
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def likeDislikeArticle(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if article.likes.filter(id=request.user.id).exists():
+        article.likes.remove(request.user.id)
+    else:
+        article.likes.add(request.user.id)
+    return Response('success')
 
 #Favorite List
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def addToFavoriteList(request, article_id): 
-    article = get_object_or_404(Article, id=article_id, userID=request.user)
-    favorite_list = FavoriteList.objects.all()
-    print(favorite_list)
+def addToAndRemoveFromFavoriteList(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if article.favorite_articles.filter(id=request.user.id).exists():
+        article.favorite_articles.remove(request.user.id)
+    else:
+        article.favorite_articles.add(request.user.id)
+    return Response('success')
 
-def deleteFromFavoriteList(request): # delete all favorite lists by one click
-    pass
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addComment(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    Comment.objects.create(userID=request.user, content=request.data['newComment'], articleID=article)
+    return Response()
 
 
-def createComment(request): 
-    pass
+
